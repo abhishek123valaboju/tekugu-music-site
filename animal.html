@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animal MP3 Player</title>
+    <link rel="shortcut icon" href="b.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            height: 100vh;
+            margin: 0;
+            background-color: #282c35;
+        }
+
+        #player-container {
+            text-align: center;
+            background-color: rgba(41, 35, 35, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #audio-player {
+            width: 300px;
+            margin-bottom: 20px;
+            background-color: #282c35;
+            
+            outline: none;
+        }
+
+        #img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .song-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .song-list li {
+            cursor: pointer;
+            color: #61dafb;
+            transition: color 0.3s;
+        }
+
+        .song-list li:hover {
+            color: #4fa3d1;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background-color: #61dafb;
+            color: #282c35;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .control-btn:hover {
+            background-color: #4fa3d1;
+        }
+    </style>
+</head>
+<body>
+
+<div id="player-container">
+    <audio id="audio-player" controls>
+        <source src="" type="audio/mp3" id="audio-source">
+        Your browser does not support the audio element.
+    </audio>
+
+    <img src="./B.png" alt="Song Image" id="img" >
+    
+    <ul class="song-list" id="song-list">
+        <li onclick="playSong(0)">(play)HUA MAIN</li>
+        <li onclick="playSong(1)">(play)PEHLE BHI MAIN</li>
+        <li onclick="playSong(2)">(play)SAARI DUNIYA JALADENGE</li>
+        <li onclick="playSong(3)">(play)ARJAN VALLY</li>
+        <li onclick="playSong(4)">(play)PAAPA MERI JAAN</li>
+        <li onclick="playSong(5)">(play)JAMAL KUDU</li>
+    </ul>
+
+    <div class="controls">
+        <button class="control-btn" onclick="previousSong()">Previous</button>
+        <button class="control-btn" onclick="togglePlayPause()">Play/Pause</button>
+        <button class="control-btn" onclick="nextSong()">Next</button>
+    </div>
+</div>
+
+<script>
+   
+    const audioPlayer = document.getElementById('audio-player');
+    const audioSource = document.getElementById('audio-source');
+    const songImage = document.getElementById('song-image');
+    const songList = document.getElementById('song-list');
+
+    const songs = ['11.mp3', '12.mp3', '13.mp3', '14.mp3', '15.mp3', '16.mp3'];
+    let currentSongIndex = 0;
+
+    function playSong(index) {
+        currentSongIndex = index;
+        audioSource.src = songs[index];
+        audioPlayer.load();
+        audioPlayer.play();
+        updateSongImage();
+    }
+
+    function togglePlayPause() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+        } else {
+            audioPlayer.pause();
+        }
+    }
+
+    function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        playSong(currentSongIndex);
+    }
+
+    function previousSong() {
+        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+        playSong(currentSongIndex);
+    }
+
+    function updateSongImage() {
+        // Replace with logic to update the image based on the current song
+        songImage.src = `song${currentSongIndex + 1}.jpg`;
+    }
+
+    // Populate the song list
+   // songs.forEach((song, index) => {
+     //   const li = document.createElement('li');
+       // li.textContent = `Song ${index + 1}`;
+       // li.onclick = () => playSong(index);
+       // songList.appendChild(li);
+    //});
+
+    // Initial setup
+    playSong(currentSongIndex);
+</script>
+
+</body>
+</html>
